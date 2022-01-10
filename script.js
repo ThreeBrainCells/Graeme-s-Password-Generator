@@ -7,7 +7,6 @@ var capArr = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q
 var numArr = ["0","1","2","3","4","5","6","7","8","9"] //length=10
 var specArr = ["!","#","$","%","&","'","(",")","*","+","-",".","/","?",":",";","<",">","=","@","[","]","^","_","`","{","}","|","~"] //length=29
 
-var chara = 8
 var lowerCase = true
 var upperCase = false
 var numbers = false
@@ -21,35 +20,32 @@ var specChoice = specArr[Math.floor(Math.random() * specArr.length)]
 var text=""
 var optionsRand = []
 
-// Gets string choice from user, check to ensure it fits length requirements.
-function characters(){
+
+// Gathers variables, randomizes order, then creates the password string.
+function generatePassword(lowArr,capArr,numArr,specArr){
+  
+  // Gets the password length and ensures it's valid
   var chara = window.prompt("How long do you want your password?\nPlease enter a number between 8 and 126")
   if (chara<8 || chara>126){
     window.alert("That's not a valid length, sorry!")
-    characters()
+    var chara = window.prompt("How long do you want your password?\nPlease enter a number between 8 and 126")
   }
-  return chara
-}
-// Receives parameter choices from user, ensures they pick at least one or sends them back to the start.
-function parametersCheck(){
+  // Gathers the user's parameters and ensures they pick at least one.
   lowerCase=window.confirm("Do you want lowercase letters?")
   upperCase=window.confirm("Do you want CAPITAL letters?")
   numbers=window.confirm("Do you want numbers (i.e. 1,2,3)?")
   special=window.confirm("Do you want special characters(i.e. ., ?, &, ], ~)?")
   if (numbers===false && special===false && lowerCase===false && upperCase===false){
     window.alert("Please select at least one type of character")
-    characters()
+    lowerCase=window.confirm("Do you want lowercase letters?")
+    upperCase=window.confirm("Do you want CAPITAL letters?")
+    numbers=window.confirm("Do you want numbers (i.e. 1,2,3)?")
+    special=window.confirm("Do you want special characters(i.e. ., ?, &, ], ~)?")
   }
-  return lowerCase
-  return upperCase
-  return numbers
-  return special
-}
-// Gathers variables, randomizes order, then creates the password string.
-function generatePassword(lowArr,capArr,numArr,specArr){
-  
+
+
   var i=0
-  while(i<=chara){
+  while(i<chara){
   
   if (lowerCase===true){
     optionsRand.push(lowChoice)
@@ -73,8 +69,6 @@ function generatePassword(lowArr,capArr,numArr,specArr){
 }
 // Writes the password to the #password input in the html.
 function writePassword() {
-  characters()
-  parametersCheck()
   generatePassword()
   var password = text;
   var passwordText = document.querySelector("#password");
