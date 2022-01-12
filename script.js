@@ -12,18 +12,13 @@ var upperCase = false
 var numbers = false
 var special = false
 
-var lowChoice = lowArr[Math.floor(Math.random() * lowArr.length)]
-var capChoice = capArr[Math.floor(Math.random() * capArr.length)]
-var numChoice = numArr[Math.floor(Math.random() * numArr.length)]
-var specChoice = specArr[Math.floor(Math.random() * specArr.length)]
-
-var text=""
 var optionsRand = []
 
 
 // Gathers variables, randomizes order, then creates the password string.
-function generatePassword(lowArr,capArr,numArr,specArr){
-  
+function generatePassword(){
+  var text=""
+  var halfString=""
   // Gets the password length and ensures it's valid
   var chara = window.prompt("How long do you want your password?\nPlease enter a number between 8 and 126")
   if (chara<8 || chara>126){
@@ -42,35 +37,65 @@ function generatePassword(lowArr,capArr,numArr,specArr){
     numbers=window.confirm("Do you want numbers (i.e. 1,2,3)?")
     special=window.confirm("Do you want special characters(i.e. ., ?, &, ], ~)?")
   }
-
-
+// Writes guaranteed characters depending on parameters.
+var param = 0
+if (lowerCase===true){
+  var lowStr = lowArr[Math.floor(Math.random() * lowArr.length)]
+  param++
+}
+if (upperCase===true){
+  var capStr = lowArr[Math.floor(Math.random() * capArr.length)]
+  param++
+}
+if (numbers===true){
+  var numStr = lowArr[Math.floor(Math.random() * numArr.length)]
+  param++
+}
+if (special===true){
+  var specStr = lowArr[Math.floor(Math.random() * specArr.length)]
+  param++
+}
+var string = (chara - param)
+console.log(string);
+// Writes the password via looping randomizers.
   var i=0
-  while(i<chara){
-  
-  if (lowerCase===true){
+  while(i<string){
+    if (lowerCase===true){
+    var lowChoice = lowArr[Math.floor(Math.random() * lowArr.length)]
     optionsRand.push(lowChoice)
   }
   if(upperCase===true){
+    var capChoice = capArr[Math.floor(Math.random() * capArr.length)]
     optionsRand.push(capChoice)
   }
   if (numbers===true){
+    var numChoice = numArr[Math.floor(Math.random() * numArr.length)]
     optionsRand.push(numChoice)
   }
   if (special===true){
+    var specChoice = specArr[Math.floor(Math.random() * specArr.length)]
     optionsRand.push(specChoice)
   }
   
-    text += optionsRand[Math.floor(Math.random() * optionsRand.length)]
+    halfString += optionsRand[Math.floor(Math.random() * optionsRand.length)]
     optionsRand=[]
 
     i++
   }
+// Adds guaranteed characters into password
+  var pos = Math.floor(Math.random() * (halfString.length + 1))
+halfString = [halfString.slice(0, pos), lowStr, halfString.slice(pos)].join("")
+halfString = [halfString.slice(0, pos), capStr, halfString.slice(pos)].join("")
+halfString = [halfString.slice(0, pos), numStr, halfString.slice(pos)].join("")
+halfString = [halfString.slice(0, pos), specStr, halfString.slice(pos)].join("")
+
+text= halfString
   return text
 }
+
 // Writes the password to the #password input in the html.
 function writePassword() {
-  generatePassword()
-  var password = text;
+  var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
