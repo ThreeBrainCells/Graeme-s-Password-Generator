@@ -6,3 +6,5 @@ To my understanding my assignment was to make the pre-designed HTML and CSS work
 This is the result: https://threebraincells.github.io/Graeme-s-Password-Generator/
 
 [What the website looks like](Password-Generator-result.png)
+
+Ask me about this @ teentrose@gmail.com
